@@ -1,15 +1,18 @@
 require('dotenv').config();
 const express = require('express');
+const apiRoutes = require('./routes/api');
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const url = process.env.MONGO_URL;
 const dbName = process.env.DB_NAME;
 const collectionName = process.env.COLLECTION_NAME;
 let jsonData = [];
+
+app.use('/api', apiRoutes);
 
 // Function to read data from the JSON file
 const readData = () => {
