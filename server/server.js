@@ -1,8 +1,6 @@
 const express = require('express');
+const fs = require('fs');
 const { MongoClient } = require('mongodb');
-
-// sampleJsonData.json is given to GitHub repo as jsondata.json contains sensitive data
-const jsonData = require('./data/jsondata.json');
 
 const app = express();
 const PORT = 3000;
@@ -10,29 +8,47 @@ const PORT = 3000;
 const url = 'mongodb://127.0.0.1:27017';
 const dbName = 'visualizeDB';
 const collectionName = 'visualizations';
+let jsonData = [];
 
-// Connect to the database
-MongoClient.connect(url, { useUnifiedTopology: true })
-  .then(client => {
+// Function to read data from the JSON file
+const readData = () => {
+  // sampleJsonData.json is given to GitHub repo as jsondata.json contains sensitive data
+  fs.readFile('./data/jsondata.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading data from file:', err);
+    } else {
+      jsonData = JSON.parse(data);
+      updateDatabase();
+    }
+  });
+};
+
+// Function to update the database with the modified JSON data
+const updateDatabase = async () => {
+  try {
+    const client = await MongoClient.connect(url, { useUnifiedTopology: true });
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
-    // Delete all documents from the collection
-    collection.deleteMany({})
-      .then(() => {
-        // Insert JSON data into the database
-        collection.insertMany(jsonData, (err, result) => {
-          if (err) {
-            console.error('Error inserting data:', err);
-          } else {
-            console.log(`${result.insertedCount} documents inserted successfully`);
-          }
-          client.close();
-        });
-      })
-      .catch(err => console.error('Error deleting documents:', err));
-  })
-  .catch(err => console.error('Error connecting to the database', err));
+    await collection.deleteMany({});
+
+    const result = await collection.insertMany(jsonData);
+    console.log(`${result.insertedCount} documents inserted successfully`);
+
+    client.close();
+  } catch (err) {
+    console.error('Error connecting to the database', err);
+  }
+};
+
+// Initial data read and database update
+readData();
+
+// Watch for changes in the JSON file and update the data accordingly
+fs.watchFile('./data/jsondata.json', (curr, prev) => {
+  console.log('JSON file has been modified');
+  readData();
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
