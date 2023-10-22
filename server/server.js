@@ -19,8 +19,13 @@ const readData = () => {
         console.error('Error reading data from file:', err);
       } else {
         try {
-          jsonData = JSON.parse(data);
-          updateDatabase();
+          const currentData = JSON.parse(data);
+          if (JSON.stringify(jsonData) !== JSON.stringify(currentData)) {
+            jsonData = currentData;
+            updateDatabase();
+          } else {
+            console.log('No modifications in JSON file');
+          }
         } catch (parseErr) {
           console.error('Error parsing JSON:', parseErr);
         }
@@ -55,9 +60,7 @@ readData();
 // Watch for changes in the JSON file and update the data accordingly
 fs.watchFile('./data/jsondata.json', { persistent: true, interval: 500 }, (curr, prev) => {
   try {
-    const currentSize = curr.size;
-    const previousSize = prev.size;
-    if (currentSize != previousSize) {
+    if (curr.mtime != prev.mtime) {
       console.log('JSON file has been modified');
       readData();
     } else {
