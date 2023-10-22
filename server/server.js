@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
@@ -5,9 +6,9 @@ const { MongoClient } = require('mongodb');
 const app = express();
 const PORT = 3000;
 
-const url = 'mongodb://127.0.0.1:27017';
-const dbName = 'visualizeDB';
-const collectionName = 'visualizations';
+const url = process.env.MONGO_URL;
+const dbName = process.env.DB_NAME;
+const collectionName = process.env.COLLECTION_NAME;
 let jsonData = [];
 
 // Function to read data from the JSON file
