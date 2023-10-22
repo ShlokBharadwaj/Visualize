@@ -26,7 +26,7 @@ const readData = () => {
 // Function to update the database with the modified JSON data
 const updateDatabase = async () => {
   try {
-    const client = await MongoClient.connect(url, { useUnifiedTopology: true });
+    const client = await MongoClient.connect(url);
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
