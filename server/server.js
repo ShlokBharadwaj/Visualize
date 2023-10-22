@@ -47,7 +47,9 @@ readData();
 // Watch for changes in the JSON file and update the data accordingly
 fs.watchFile('./data/jsondata.json', { persistent: true, interval: 500 }, (curr, prev) => {
   const currentSize = curr.size;
+  // console.log(`Current size of JSON file: ${currentSize}`);
   const previousSize = prev.size;
+  // console.log(`Previous size of JSON file: ${previousSize}`);
   if (currentSize != previousSize) {
     console.log('JSON file has been modified');
     readData();
