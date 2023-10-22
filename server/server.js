@@ -1,5 +1,7 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
+
+// sampleJsonData.json is given to GitHub repo as jsondata.json contains sensitive data
 const jsonData = require('./data/jsondata.json');
 
 const app = express();
@@ -15,6 +17,9 @@ MongoClient.connect(url, { useUnifiedTopology: true })
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
+    // Delete all documents from the collection
+    collection.deleteMany({})
+      .then(() => {
         // Insert JSON data into the database
         collection.insertMany(jsonData, (err, result) => {
           if (err) {
@@ -23,6 +28,7 @@ MongoClient.connect(url, { useUnifiedTopology: true })
             console.log(`${result.insertedCount} documents inserted successfully`);
           }
           client.close();
+        });
       })
       .catch(err => console.error('Error deleting documents:', err));
   })
