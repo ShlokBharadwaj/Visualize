@@ -5,7 +5,7 @@ const fs = require('fs');
 const { MongoClient } = require('mongodb');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const url = process.env.MONGO_URL;
 const dbName = process.env.DB_NAME;
