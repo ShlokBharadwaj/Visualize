@@ -12,15 +12,23 @@ let jsonData = [];
 
 // Function to read data from the JSON file
 const readData = () => {
-  // sampleJsonData.json is given to GitHub repo as jsondata.json contains sensitive data
-  fs.readFile('./data/jsondata.json', 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading data from file:', err);
-    } else {
-      jsonData = JSON.parse(data);
-      updateDatabase();
-    }
-  });
+  try {
+    // sampleJsonData.json is given to GitHub repo as jsondata.json contains sensitive data
+    fs.readFile('./data/jsondata.json', 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading data from file:', err);
+      } else {
+        try {
+          jsonData = JSON.parse(data);
+          updateDatabase();
+        } catch (parseErr) {
+          console.error('Error parsing JSON:', parseErr);
+        }
+      }
+    });
+  } catch (readErr) {
+    console.error('Error reading data from file:', readErr);
+  }
 };
 
 // Function to update the database with the modified JSON data
@@ -46,15 +54,17 @@ readData();
 
 // Watch for changes in the JSON file and update the data accordingly
 fs.watchFile('./data/jsondata.json', { persistent: true, interval: 500 }, (curr, prev) => {
-  const currentSize = curr.size;
-  // console.log(`Current size of JSON file: ${currentSize}`);
-  const previousSize = prev.size;
-  // console.log(`Previous size of JSON file: ${previousSize}`);
-  if (currentSize != previousSize) {
-    console.log('JSON file has been modified');
-    readData();
-  } else {
-    console.log('No modifications in JSON file');
+  try {
+    const currentSize = curr.size;
+    const previousSize = prev.size;
+    if (currentSize != previousSize) {
+      console.log('JSON file has been modified');
+      readData();
+    } else {
+      console.log('No modifications in JSON file');
+    }
+  } catch (watchErr) {
+    console.error('Error watching file:', watchErr);
   }
 });
 
