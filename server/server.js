@@ -45,9 +45,15 @@ const updateDatabase = async () => {
 readData();
 
 // Watch for changes in the JSON file and update the data accordingly
-fs.watchFile('./data/jsondata.json', (curr, prev) => {
-  console.log('JSON file has been modified');
-  readData();
+fs.watchFile('./data/jsondata.json', { persistent: true, interval: 500 }, (curr, prev) => {
+  const currentSize = curr.size;
+  const previousSize = prev.size;
+  if (currentSize != previousSize) {
+    console.log('JSON file has been modified');
+    readData();
+  } else {
+    console.log('No modifications in JSON file');
+  }
 });
 
 app.listen(PORT, () => {
