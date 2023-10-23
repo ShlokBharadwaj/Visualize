@@ -75,6 +75,10 @@ fs.watchFile('./data/jsondata.json', { persistent: true, interval: 500 }, (curr,
   }
 });
 
+app.get('/', (req, res) => {
+  res.send(`Welcome to the Data Visualization Dashboard API<br>You can access the data at <a href="/api/data">/api/data</a>`);
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
