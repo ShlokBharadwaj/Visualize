@@ -33,6 +33,7 @@ const readData = () => {
           const currentHash = generateHash(currentData);
 
           if (previousHash !== currentHash) {
+            console.log('JSON file has been modified');
             jsonData = currentData;
             updateDatabase();
             previousHash = currentHash;
@@ -101,11 +102,8 @@ readData();
 // Watch for changes in the JSON file and update the data accordingly
 fs.watchFile('./data/jsondata.json', { persistent: true, interval: 500 }, (curr, prev) => {
   try {
-    if (curr.mtime != prev.mtime) {
-      console.log('JSON file has been modified');
+    if (curr.mtime !== prev.mtime) {
       readData();
-    } else {
-      console.log('No modifications in JSON file');
     }
   } catch (watchErr) {
     console.error('Error watching file:', watchErr);
