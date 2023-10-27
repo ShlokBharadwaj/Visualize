@@ -8,8 +8,8 @@ const Header = () => {
         <SearchOutlined className="absolute left-6 top-7 text-gray-400" />
         <input
           type="text"
-          placeholder="     Search"
-          className="bg-transparent text-gray-800 rounded-md py-3 px-4 w-full border outline-none"
+          placeholder="Search"
+          className="bg-transparent text-gray-800 rounded-md py-3 px-4 w-full border outline-none pl-10"
         />
         <AccountCircleOutlined className="absolute right-6 top-7 text-gray-400" />
         <NotificationsOutlined className="absolute right-14 top-7 text-gray-400" />
