@@ -23,15 +23,15 @@ const SideMenu = () => {
             </div>
             <ul className="flex-grow flex flex-col justify-start p-4">
                 <li className="p-4 flex items-center cursor-pointer">
-                    <BarChart className={`text-gray-400 mr-2 ${isCollapsed ? 'hidden' : 'block'}`} />
+                    <BarChart className={`text-gray-400 mr-2 ${isCollapsed ? 'block' : 'block'}`} />
                     <span className={`text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Analytics</span>
                 </li>
                 <li className="p-4 flex items-center cursor-pointer">
-                    <AccountBox className={`text-gray-400 mr-2 ${isCollapsed ? 'hidden' : 'block'}`} />
+                    <AccountBox className={`text-gray-400 mr-2 ${isCollapsed ? 'block' : 'block'}`} />
                     <span className={`text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Profile</span>
                 </li>
                 <li className="p-4 flex items-center cursor-pointer">
-                    <Settings className={`text-gray-400 mr-2 ${isCollapsed ? 'hidden' : 'block'}`} />
+                    <Settings className={`text-gray-400 mr-2 ${isCollapsed ? 'block' : 'block'}`} />
                     <span className={`text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Settings</span>
                 </li>
             </ul>
