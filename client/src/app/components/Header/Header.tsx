@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { SearchOutlined, LightModeOutlined, AccountCircleOutlined, NotificationsOutlined } from '@mui/icons-material';
 
