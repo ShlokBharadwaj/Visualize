@@ -5,11 +5,11 @@ import Login from "@/app/login/Login";
 
 export default function Page() {
   return <>
-    <main className="flex items-center justify-evenly h-screen ">
+    <main className="">
       <Header />
       <SideMenu />
-      <Dashboard />
-      <Login />
+      {/* <Dashboard /> */}
+      {/* <Login /> */}
     </main>
   </>
 }
