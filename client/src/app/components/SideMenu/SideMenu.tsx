@@ -18,7 +18,7 @@ const SideMenu = () => {
                     {!isCollapsed && (
                         <a href="/">
                             <div className="mr-2">
-                                <Image src="/assets/Visualize-logos_transparent.png" alt="Visualize logo" width={160} height={40} layout="responsive" className="text-xl font-bold text-gray-800" />
+                                <Image src="/assets/Visualize-logos_transparent.png" alt="Visualize logo" width={160} height={40} />
                             </div>
                         </a>
                     )}
@@ -28,6 +28,13 @@ const SideMenu = () => {
                 </div>
             </div>
             <ul className="flex-grow flex flex-col p-4">
+                {isCollapsed && (
+                    <a href="/">
+                        <li className="p-1 flex items-center cursor-pointer my-2 hover:bg-gray-200 rounded-md" onClick={() => console.log('Homepage clicked')}>
+                            <Image src="/assets/Visualize-logos_transparent.png" alt="Visualize logo" width={160} height={40} className='rounded-md'/>
+                        </li>
+                    </a>)
+                }
                 <a href="/dashboard/analytics">
                     <li className="p-1 flex items-center cursor-pointer my-2 hover:bg-gray-200 rounded-md" onClick={() => console.log('Analytics clicked')}>
                         <BarChart className={`text-gray-400 mr-2 ${isCollapsed ? 'block' : 'block'}`} />
