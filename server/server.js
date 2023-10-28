@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const apiRoutes = require('./routes/api');
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
 const crypto = require('crypto');
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3001;
 
 const url = process.env.MONGO_URL;
