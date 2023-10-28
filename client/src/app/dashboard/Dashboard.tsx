@@ -27,14 +27,16 @@ interface IData {
 const Dashboard: React.FC = () => {
   const [data, setData] = useState<IData[]>([]);
   const chartRef = useRef(null);
+  const isChartCreated = useRef(false);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   useEffect(() => {
-    if (data.length) {
+    if (data.length && !isChartCreated.current) {
       createLineChart(data);
+      isChartCreated.current = true;
     }
   }, [data]);
 
