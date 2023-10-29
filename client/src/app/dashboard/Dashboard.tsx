@@ -3,6 +3,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import * as d3 from 'd3';
+import Header from '../components/Header/Header';
+import SideMenu from '../components/SideMenu/SideMenu';
 
 interface IData {
   end_year: string | number;
@@ -67,11 +69,26 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <header className="bg-white text-gray-800 shadow-md p-4">
-        <h1 className="text-3xl font-bold text-center">Dashboard</h1>
-      </header>
-      <div ref={chartRef} id="lineChart" className="mt-8 mx-4"></div>
+    <div className="flex flex-col h-screen bg-gray-100 overflow-hidden">
+      <Header />
+      <div className="flex flex-col md:flex-row flex-1 bg-gray-100 overflow-y-auto">
+        <SideMenu />
+        <div className="w-full p-4">
+          {/* Main Content */}
+          <div className="grid grid-cols-1 gap-4">
+            <div className="bg-red-300 p-60 rounded-md">Main Data Visualization</div>
+            <div className="bg-green-300 p-4 rounded-md">Data Visualization 1</div>
+            <div className="bg-yellow-300 p-4 rounded-md">Data Visualization 2</div>
+            <div className="bg-purple-300 p-4 rounded-md">Data Visualization 3</div>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-4">
+            <div className="bg-yellow-300 p-60 rounded-md">Data Visualization 4</div>
+            <div className="bg-blue-300 p-4 rounded-md">Data Visualization 5</div>
+            <div className="bg-indigo-300 p-4 rounded-md">Data Visualization 6</div>
+            <div className="bg-pink-300 p-10 rounded-md">Data Visualization 7</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
