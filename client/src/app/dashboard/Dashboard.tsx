@@ -53,14 +53,13 @@ const Dashboard: React.FC = () => {
 
   const createLineChart = (data: IData[]) => {
     const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-    const width = 400 - margin.left - margin.right;
+    const width = chartRef.current?.clientWidth || 400 - margin.left - margin.right;
     const height = 200 - margin.top - margin.bottom;
 
     const svg = d3
       .select(chartRef.current)
       .append('svg')
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
+      .attr('viewBox', `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -111,7 +110,7 @@ const Dashboard: React.FC = () => {
         <div className="w-full overflow-y-auto p-4">
           {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div ref={chartRef} className="bg-red-300 md:p-60 p-28 rounded-md">Main Data Visualization</div>
+            <div ref={chartRef} className="bg-red-300 md:p-10 p-4 rounded-md">Main Data Visualization</div>
             <div className="bg-green-300 md:p-60 p-28 rounded-md">Data Visualization 1</div>
             <div className="bg-yellow-300 p-10 rounded-md">Data Visualization 2</div>
             <div className="bg-purple-300 p-10 rounded-md">Data Visualization 3</div>
