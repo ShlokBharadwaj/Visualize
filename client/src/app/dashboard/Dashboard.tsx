@@ -28,7 +28,7 @@ interface IData {
 
 const Dashboard: React.FC = () => {
   const [data, setData] = useState<IData[]>([]);
-  const chartRef = useRef(null);
+  const chartRef = useRef<HTMLDivElement>(null);
   const isChartCreated = useRef(false);
 
   useEffect(() => {
@@ -52,20 +52,53 @@ const Dashboard: React.FC = () => {
   };
 
   const createLineChart = (data: IData[]) => {
-    const svg = d3.select(chartRef.current)
+    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+    const width = 400 - margin.left - margin.right;
+    const height = 200 - margin.top - margin.bottom;
+
+    const svg = d3
+      .select(chartRef.current)
       .append('svg')
-      .attr('width', 400)
-      .attr('height', 200);
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    const line = d3.line<IData>()
-      .x((d, i) => i * 40)
-      .y((d) => 200 - 10 * (d.intensity as number));
+    const x = d3.scaleLinear().range([0, width]);
+    const y = d3.scaleLinear().range([height, 0]);
 
-    svg.append('path')
-      .datum(data)
-      .attr('fill', 'none')
-      .attr('stroke', 'steelblue')
-      .attr('d', line);
+    const formattedData: [number, number][] = data.map((d, i) => [
+      i,
+      d.intensity as number,
+    ]);
+
+    x.domain(d3.extent(formattedData, (d) => d[0]) as [number, number]);
+    y.domain(d3.extent(formattedData, (d) => d[1]) as [number, number]);
+    const valueline = d3
+      .line<[number, number]>()
+      .x((d) => x(d[0]))
+      .y((d) => y(d[1]));
+
+    svg
+      .append('path')
+      .data([formattedData])
+      .attr('class', 'line')
+      .attr('d', valueline);
+
+    svg
+      .append('text')
+      .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
+      .style('text-anchor', 'middle')
+      .text('Likelihood');
+
+    svg
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - margin.left)
+      .attr('x', 0 - height / 2)
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .text('Intensity');
   };
 
   return (
