@@ -78,17 +78,16 @@ const Dashboard: React.FC = () => {
         <div className="w-full overflow-y-auto p-4">
           {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-red-300 md:p-60 p-4 rounded-md">Main Data Visualization</div>
-            <div className="bg-green-300 md:p-60 p-4 rounded-md">Data Visualization 1</div>
-            <div className="bg-yellow-300 p-4 rounded-md">Data Visualization 2</div>
-            <div className="bg-purple-300 p-4 rounded-md">Data Visualization 3</div>
-            <div className="bg-yellow-300 md:p-60 p-4 rounded-md">Data Visualization 4</div>
-            <div className="bg-blue-300 md:p-60 p-4 rounded-md">Data Visualization 5</div>
-            <div className="bg-indigo-300 p-6 md:p-10 rounded-md">Data Visualization 6</div>
-            <div className="bg-pink-300 p-6 md:p-10 rounded-md">Data Visualization 7</div>
+            <div className="bg-red-300 md:p-60 p-28 rounded-md">Main Data Visualization</div>
+            <div className="bg-green-300 md:p-60 p-28 rounded-md">Data Visualization 1</div>
+            <div className="bg-yellow-300 p-10 rounded-md">Data Visualization 2</div>
+            <div className="bg-purple-300 p-10 rounded-md">Data Visualization 3</div>
+            <div className="bg-yellow-300 md:p-60 p-28 rounded-md">Data Visualization 4</div>
+            <div className="bg-blue-300 md:p-60 p-28 rounded-md">Data Visualization 5</div>
+            <div className="bg-indigo-300 p-20 md:p-10 rounded-md">Data Visualization 6</div>
+            <div className="bg-pink-300 p-20 md:p-10 rounded-md">Data Visualization 7</div>
           </div>
         </div>
-
       </div>
     </div>
   );
