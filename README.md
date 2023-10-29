@@ -1,7 +1,7 @@
 # Visualize
 Visualize data insights efficiently using D3.js and MERN stack.
 
-This project is designed to visualize various data sets using D3.js in a Next.js application. It allows for the display of multiple data visualization components, including line charts, scatter plots, and bar charts, using data fetched from an external API.
+This project is designed to facilitate the visualization of various data sets using D3.js in a Next.js application. It allows for the display of multiple data visualization components, including line charts, scatter plots, and bar charts, using data fetched from an external API.
 
 ## Getting Started
 
@@ -53,13 +53,17 @@ You can access the client at:
 - API data fetching and visualization
 - Interactive and responsive user interface
 
-## Dependencies
-
-- Next.js
-- D3.js
-- Axios
-- Node.js
-- Express
+## Built With
+- [Next.js](https://nextjs.org/) - The React framework for production-grade applications.
+- [D3.js](https://d3js.org/) - JavaScript library for manipulating documents based on data.
+- [Axios](https://axios-http.com/) - Promise-based HTTP client for the browser and Node.js.
+- [Node.js](https://nodejs.org/) - A JavaScript runtime built on Chrome's V8 JavaScript engine.
+- [Express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js.
+- [MongoDB](https://www.mongodb.com/) - A general-purpose, document-based, distributed database.
+- [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
+- [TypeScript](https://www.typescriptlang.org/) - A superset of JavaScript that adds static typing to the language.
+- [Material-UI](https://mui.com/) - A popular React UI framework for building high-quality, responsive web applications.
 
 ## Contributing
 
