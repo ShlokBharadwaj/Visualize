@@ -69,11 +69,13 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100 overflow-hidden">
+    <div className="flex flex-col h-screen bg-gray-100">
       <Header />
-      <div className="flex flex-col md:flex-row flex-1 bg-gray-100 overflow-y-auto">
-        <SideMenu />
-        <div className="w-full p-4">
+      <div className="flex flex-1 overflow-hidden">
+        <div className="flex bg-gray-100">
+          <SideMenu />
+        </div>
+        <div className="w-full overflow-y-auto p-4">
           {/* Main Content */}
           <div className="grid grid-cols-1 gap-4">
             <div className="bg-red-300 p-60 rounded-md">Main Data Visualization</div>
