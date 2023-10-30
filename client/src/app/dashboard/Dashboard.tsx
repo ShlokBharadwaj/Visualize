@@ -63,7 +63,10 @@ const Dashboard: React.FC = () => {
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    const x = d3.scaleLinear().range([0, width]);
+    const x = d3.scaleBand()
+      .range([0, width])
+      .domain(data.map((d, i) => String(i))) // Converted the index to string
+      .padding(0.2);
     const y = d3.scaleLinear().range([height, 0]);
 
     const formattedData: [number, number][] = data.map((d, i) => [
@@ -71,17 +74,18 @@ const Dashboard: React.FC = () => {
       d.intensity as number,
     ]);
 
-    x.domain(d3.extent(formattedData, (d) => d[0]) as [number, number]);
     y.domain(d3.extent(formattedData, (d) => d[1]) as [number, number]);
-    const valueline = d3
-      .line<[number, number]>()
-      .x((d) => x(d[0]))
+
+    const valueline = d3.line<[number, number]>()
+      .x((d) => x(String(d[0])) || 0) // Used String() to ensure string values
       .y((d) => y(d[1]));
 
     svg
       .append('path')
-      .data([formattedData])
-      .attr('class', 'line')
+      .datum(formattedData)
+      .attr('fill', 'none')
+      .attr('stroke', 'steelblue')
+      .attr('stroke-width', 1.5)
       .attr('d', valueline);
 
     svg
