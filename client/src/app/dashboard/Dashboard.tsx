@@ -65,39 +65,32 @@ const Dashboard: React.FC = () => {
 
     const x = d3.scaleBand()
       .range([0, width])
-      .domain(data.map((d, i) => String(i)))
+      .domain(data.map((_, i) => String(i)))
       .padding(0.2);
-    const y = d3.scaleLinear().range([height, 0]);
 
-    const formattedData: [number, number][] = data.map((d, i) => [
-      i,
-      d.intensity as number,
-    ]);
+    const y = d3.scaleLinear()
+      .range([height, 0])
+      .domain(d3.extent(data, d => d.intensity) as [number, number]);
 
-    y.domain(d3.extent(formattedData, (d) => d[1]) as [number, number]);
+    const valueline = d3.line<{ index: number; intensity: number }>()
+      .x(d => x(String(d.index)) || 0)
+      .y(d => y(d.intensity));
 
-    const valueline = d3.line<[number, number]>()
-      .x((d) => x(String(d[0])) || 0)
-      .y((d) => y(d[1]));
-
-    svg
-      .append('path')
-      .datum(formattedData)
+    svg.append('path')
+      .datum(data.map((d, i) => ({ index: i, intensity: d.intensity })))
       .attr('fill', 'none')
       .attr('stroke', 'steelblue')
       .attr('stroke-width', 1.5)
       .attr('d', valueline)
       .attr('transform', `translate(${x.bandwidth() / 2},0)`);
 
-    svg
-      .append('text')
+    svg.append('text')
       .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
       .attr('stroke', 'steelblue')
       .style('text-anchor', 'middle')
       .text('Likelihood');
 
-    svg
-      .append('text')
+    svg.append('text')
       .attr('transform', 'rotate(-90)')
       .attr('stroke', 'steelblue')
       .attr('y', 0 - margin.left)
