@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
   const createLineChart = (data: IData[]) => {
     const margin = { top: 20, right: 20, bottom: 30, left: 50 };
     const width = chartRef.current?.clientWidth || 400 - margin.left - margin.right;
-    const height = 200 - margin.top - margin.bottom;
+    const height = 400 - margin.top - margin.bottom;
 
     const svg = d3
       .select(chartRef.current)
