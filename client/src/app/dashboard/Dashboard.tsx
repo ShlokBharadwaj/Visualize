@@ -65,7 +65,7 @@ const Dashboard: React.FC = () => {
 
     const x = d3.scaleBand()
       .range([0, width])
-      .domain(data.map((d, i) => String(i))) // Converted the index to string
+      .domain(data.map((d, i) => String(i)))
       .padding(0.2);
     const y = d3.scaleLinear().range([height, 0]);
 
@@ -77,7 +77,7 @@ const Dashboard: React.FC = () => {
     y.domain(d3.extent(formattedData, (d) => d[1]) as [number, number]);
 
     const valueline = d3.line<[number, number]>()
-      .x((d) => x(String(d[0])) || 0) // Used String() to ensure string values
+      .x((d) => x(String(d[0])) || 0)
       .y((d) => y(d[1]));
 
     svg
@@ -86,17 +86,20 @@ const Dashboard: React.FC = () => {
       .attr('fill', 'none')
       .attr('stroke', 'steelblue')
       .attr('stroke-width', 1.5)
-      .attr('d', valueline);
+      .attr('d', valueline)
+      .attr('transform', `translate(${x.bandwidth() / 2},0)`);
 
     svg
       .append('text')
       .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
+      .attr('stroke', 'steelblue')
       .style('text-anchor', 'middle')
       .text('Likelihood');
 
     svg
       .append('text')
       .attr('transform', 'rotate(-90)')
+      .attr('stroke', 'steelblue')
       .attr('y', 0 - margin.left)
       .attr('x', 0 - height / 2)
       .attr('dy', '1em')
