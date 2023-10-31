@@ -88,7 +88,7 @@ const Dashboard: React.FC = () => {
       .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
       .attr('stroke', 'steelblue')
       .style('text-anchor', 'middle')
-      .text('Likelihood');
+      .text('Intensity');
 
     svg.append('text')
       .attr('transform', 'rotate(-90)')
@@ -97,7 +97,7 @@ const Dashboard: React.FC = () => {
       .attr('x', 0 - height / 2)
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
-      .text('Intensity');
+      .text('Index');
   };
 
   return (
