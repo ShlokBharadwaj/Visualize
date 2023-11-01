@@ -63,32 +63,30 @@ const Dashboard: React.FC = () => {
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    const x = d3.scaleBand()
+    const x = d3.scaleLinear()
       .range([0, width])
-      .domain(data.map((_, i) => String(i)))
-      .padding(0.2);
+      .domain(d3.extent(data, d => d.likelihood) as [number, number]);
 
     const y = d3.scaleLinear()
       .range([height, 0])
       .domain(d3.extent(data, d => d.intensity) as [number, number]);
 
-    const valueline = d3.line<{ index: number; intensity: number }>()
-      .x(d => x(String(d.index)) || 0)
+    const valueline = d3.line<IData>()
+      .x(d => x(d.likelihood) || 0)
       .y(d => y(d.intensity));
 
     svg.append('path')
-      .datum(data.map((d, i) => ({ index: i, intensity: d.intensity })))
+      .datum(data)
       .attr('fill', 'none')
       .attr('stroke', 'steelblue')
       .attr('stroke-width', 1.5)
-      .attr('d', valueline)
-      .attr('transform', `translate(${x.bandwidth() / 2},0)`);
+      .attr('d', valueline);
 
     svg.append('text')
       .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
       .attr('stroke', 'steelblue')
       .style('text-anchor', 'middle')
-      .text('Intensity');
+      .text('Likelihood');
 
     svg.append('text')
       .attr('transform', 'rotate(-90)')
@@ -97,7 +95,7 @@ const Dashboard: React.FC = () => {
       .attr('x', 0 - height / 2)
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
-      .text('Index');
+      .text('Intensity');
   };
 
   return (
