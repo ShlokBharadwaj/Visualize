@@ -28,19 +28,10 @@ interface IData {
 
 const Dashboard: React.FC = () => {
   const [data, setData] = useState<IData[]>([]);
-  const chartRef = useRef<HTMLDivElement>(null);
-  const isChartCreated = useRef(false);
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (data.length && !isChartCreated.current) {
-      createLineChart(data);
-      isChartCreated.current = true;
-    }
-  }, [data]);
 
   const fetchData = async () => {
     try {
@@ -51,53 +42,6 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const createLineChart = (data: IData[]) => {
-    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-    const width = chartRef.current?.clientWidth || 400 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
-
-    const svg = d3
-      .select(chartRef.current)
-      .append('svg')
-      .attr('viewBox', `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
-      .append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`);
-
-    const x = d3.scaleLinear()
-      .range([0, width])
-      .domain(d3.extent(data, d => d.likelihood) as [number, number]);
-
-    const y = d3.scaleLinear()
-      .range([height, 0])
-      .domain(d3.extent(data, d => d.intensity) as [number, number]);
-
-    const valueline = d3.line<IData>()
-      .x(d => x(d.likelihood) || 0)
-      .y(d => y(d.intensity));
-
-    svg.append('path')
-      .datum(data)
-      .attr('fill', 'none')
-      .attr('stroke', 'steelblue')
-      .attr('stroke-width', 1.5)
-      .attr('d', valueline);
-
-    svg.append('text')
-      .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
-      .attr('stroke', 'steelblue')
-      .style('text-anchor', 'middle')
-      .text('Likelihood');
-
-    svg.append('text')
-      .attr('transform', 'rotate(-90)')
-      .attr('stroke', 'steelblue')
-      .attr('y', 0 - margin.left)
-      .attr('x', 0 - height / 2)
-      .attr('dy', '1em')
-      .style('text-anchor', 'middle')
-      .text('Intensity');
-  };
-
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       <Header />
@@ -106,9 +50,8 @@ const Dashboard: React.FC = () => {
           <SideMenu />
         </div>
         <div className="w-full overflow-y-auto p-4">
-          {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div ref={chartRef} className="bg-red-300 md:p-10 p-4 rounded-md">Main Data Visualization</div>
+            <div className="bg-red-300 md:p-10 p-4 rounded-md">Main Data Visualization</div>
             <div className="bg-green-300 md:p-60 p-28 rounded-md">Data Visualization 1</div>
             <div className="bg-yellow-300 p-10 rounded-md">Data Visualization 2</div>
             <div className="bg-purple-300 p-10 rounded-md">Data Visualization 3</div>
